@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton's Cradle Animation</title>
+    <style>
+        .header{
+            width: 53%;
+            background: linear-gradient(180deg, #1996f6 0%, #41ce2b 100%);
+            padding-left: 50px;
+            color: #1b404e;
+            text-align: center;
+        }
+        body{
+            background-color: #88fff72f;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .controls{
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .controls label{
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .controls input, .controls select{
+            width: calc(100% - 20px);
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .controls .control-group{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .controls .control-group label{
+            flex: 1;
+            margin-right: 10px;
+        }
+        .controls .control-group input, .controls .control-group select{
+            flex: 2;
+        }
+        .frame{
+            position: relative;
+            height: 400px;
+            background-color: #306a66;
+            border: 5px black solid;
+            border-radius: 3px;
+            box-shadow: 1px 2px 10px 0px rgba(0, 0, 0, 0.317);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        .cradle{
+            position: absolute;
+            height: 40px;
+            top: 140px;
+            padding-top: 100px;
+            display: flex;
+            justify-content: center;
+        }
+        .cradle::before{
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            top: 0;
+            left: 0;
+            border-radius: 3px;
+            background-color: aqua;
+        }
+        .ball{
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, rgb(203, 75, 11) 60%, rgb(104, 117, 117) 100%);
+            transform-origin: 50% -100px;
+            border-radius: 50%;
+            box-shadow: 1px 5px 27px 3px #00008b38;
+        }
+        .ball::before{
+            content: "";
+            display: block;
+            position: absolute;
+            height: 100px;
+            width: 1px;
+            background-color: aqua;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .theory, .application {
+            position: absolute;
+            top: 4px;
+            color: rgb(7, 9, 9);
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            z-index: 10;
+        }
+        .theory {
+            left: 10px;
+            bottom: 420px;
+        }
+        .application {
+            right: 10px;
+            bottom: 420px;
+        }
+        .theory h3, .application h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Newton Cradle</h1>
+    </div>
+    <div class="theory">
+        <h3><b><u>Newton's Cradle</u></b></h3>
+        <p><i>Newton's Cradle is a device that demonstrates the conservation of momentum and energy. It consists of a series of equally spaced, identical balls suspended by strings. When one ball on the end is lifted and released, it strikes the next ball, transmitting the force through the series of balls and causing the ball on the opposite end to swing upward. This device illustrates the principles of Newton's Third Law of Motion: "For every action, there is an equal and opposite reaction."</i></p>
+    </div>
+    <div class="application">
+        <h3><b><u>Real-time application:</u></b></h3>
+        <p><i>Newton's Cradle is often used as a desk toy and educational tool, but its principles are applied in various fields. In engineering, the conservation of momentum and energy is crucial for designing collision safety mechanisms in vehicles. In physics, the same principles help in understanding particle collisions. The device also finds applications in fields like robotics and material science where understanding impact forces and energy transfer is essential.</i></p>
+    </div>
+    <div class="controls">
+        <div class="control-group">
+            <label for="speed">Mass of the sphere (kg):</label>
+            <input type="number" id="speed" value="1" min="0.1" step="0.1">
+        </div>
+        <div class="control-group">
+            <label for="angle">Speed of the sphere (m/s):</label>
+            <input type="number" id="angle" value="30" min="10" step="5">
+        </div>
+        <div class="control-group">
+            <label for="numBalls">Number of Balls:</label>
+            <input type="number" id="numBalls" value="5" min="3" max="10">
+        </div>
+        <div class="control-group">
+            <label for="color">Ball Color (fun learning):</label>
+            <select id="color">
+                <option value="rgb(203, 75, 11)">Orange</option>
+                <option value="rgb(0, 128, 0)">Green</option>
+                <option value="rgb(0, 0, 255)">Blue</option>
+                <option value="rgb(255, 0, 0)">Red</option>
+            </select>
+        </div>
+        <button onclick="updateAnimation()">start</button>
+    </div>
+    <div class="frame">
+        <div class="cradle">
+            <!-- Balls will be generated here dynamically -->
+        </div>
+    </div>
+    <script>
+        function updateAnimation() {
+            const speed = parseFloat(document.getElementById('speed').value);
+            const angle = parseInt(document.getElementById('angle').value);
+            const numBalls = parseInt(document.getElementById('numBalls').value);
+            const color = document.getElementById('color').value;
+
+            const cradle = document.querySelector('.cradle');
+            const frame = document.querySelector('.frame');
+            cradle.innerHTML = '';
+
+            const ballSize = 40;
+            const cradleWidth = numBalls * ballSize;
+
+            frame.style.width = cradleWidth + '2px';
+            cradle.style.width = cradleWidth + '2px';
+
+            for (let i = 1; i <= numBalls; i++) {
+                const ball = document.createElement('div');
+                ball.className = `ball ball-${i}`;
+                ball.style.background = `radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, ${color} 60%, rgb(104, 117, 117) 100%)`;
+                cradle.appendChild(ball);
+            }
+
+            const styleSheet = document.styleSheets[0];
+            for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+                if (styleSheet.cssRules[i].name && styleSheet.cssRules[i].name.startsWith('ball-')) {
+                    styleSheet.deleteRule(i);
+                }
+            }
+
+            styleSheet.insertRule(`
+                @keyframes ball-1 {
+                    0%, 50% {
+                        transform: rotate(0);
+                    }
+                    100% {
+                        transform: rotate(${angle}deg);
+                    }
+                }
+            `, styleSheet.cssRules.length);
+
+            styleSheet.insertRule(`
+                @keyframes ball-${numBalls} {
+                    0%, 50% {
+                        transform: rotate(0);
+                    }
+                    100% {
+                        transform: rotate(-${angle}deg);
+                    }
+                }
+            `, styleSheet.cssRules.length);
+
+            if (numBalls > 1) {
+                const ball1 = cradle.querySelector('.ball-1');
+                ball1.style.animation = `ball-1 ${speed}s ease-out infinite alternate`;
+
+                const ballLast = cradle.querySelector(`.ball-${numBalls}`);
+                ballLast.style.animation = `ball-${numBalls} ${speed}s ease-out ${speed}s infinite alternate`;
+            }
+        }
+        updateAnimation();
+    </script>
+</body>
+</html>

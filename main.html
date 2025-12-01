@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simulation world</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b8babc;
+        }
+        .header {
+            background: linear-gradient(110deg, #b8babc 0%, #090a09 100%);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .navbar {
+            display: flex;
+            background-color: #333;
+            overflow: hidden;
+        }
+        .navbar button {
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .navbar button:hover, .dropdown:hover .dropbtn {
+            background-color: #ddd;
+            color: black;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 95%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .footer-box {
+            display: flex;
+            justify-content: space-between;
+            background-color: black;
+            color: white;
+            padding: 50px;
+            margin: 80px 20px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .social-media {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .social-media a {
+            margin: 5px 0;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: right;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header"><b>NEWTON CRADLE</b></div>
+    <div class="video-container">
+        <video id="background-video" autoplay muted loop>
+          <source src="v2v.mp4" type="video/mp4">
+    </video>
+    <div class="navbar">
+        <button>Home</button></a>
+        <a href="C:\Users\jaswant\OneDrive\Desktop\internship\theory.html"><button>Theory</button></a>
+        <a href="C:\Users\jaswant\OneDrive\Desktop\internship\newton.html"><button>About Newton</button></a>
+        <a href="C:\Users\jaswant\OneDrive\Desktop\internship\sim.html"><button>Cradle Simulation</button></a>
+        <a href="C:\Users\jaswant\OneDrive\Desktop\internship\os.html"><button>Other-Simulations</button></a>
+        <a href="https://youtu.be/yEV-QQh4P0I?si=8RKVTBgUItVPY-0z"><button>Demonstration</button></a>
+        </div>
+    </div>
+    <div class="footer-box">
+        <div class="social-media">
+            <h3><u>Follow Us</u></h3>
+            <a href="https://www.facebook.com/login.php"><ion-icon name="logo-facebook"></ion-icon>&nbsp;Facebook</a>
+            <a href="https://x.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJteCI6IjIifQ%3D%3D%22%7D"><ion-icon name="logo-twitter"></ion-icon>&nbsp;Twitter</a>
+            <a href="https://www.instagram.com/accounts/login/"><ion-icon name="logo-instagram"></ion-icon>&nbsp;Instagram</a>
+        </div>
+        <div class="contact-details">
+            <h3><u>Contact Us</u></h3>
+            <p><b>Mobile:</b>+91 86108 29053 <br>+91 93601 64986</p>
+            <p><b>Email:</b>e0323024@sriher.edu.in<br>e0323029@sriher.edu.in</p>
+        </div>
+    </div>
+</body>
+</html>

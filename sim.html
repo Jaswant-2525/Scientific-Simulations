@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newton's Cradle Animation</title>
+    <style>
+        .header {
+            width: 100%;
+            background: linear-gradient(110deg, #c9cbcd 0%, #111110 100%);
+            padding-left: 50px;
+            color: #ffffff;
+            text-align: center;
+        }
+        body {
+            background-color: #ffffff8f;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .controls {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 400px;
+            border: 5px black solid;
+        }
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .controls input, .controls select {
+            width: 80%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .controls .control-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .controls .control-group label {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .controls .control-group input, .controls .control-group select {
+            flex: 2;
+        }
+        .frame{
+            position: relative;
+            height: 400px;
+            background-color: #090909;
+            border: 5px rgb(153, 231, 245) solid;
+            border-radius: 3px;
+            box-shadow: 1px 2px 10px 0px rgba(12, 12, 12, 0.317);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+        .cradle{
+            position: absolute;
+            height: 40px;
+            top: 140px;
+            padding-top: 100px;
+            display: flex;
+            justify-content: center;
+        }
+        .cradle::before{
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            top: 0;
+            left: 0;
+            border-radius: 3px;
+            background-color: rgb(255, 255, 255);
+        }
+        .ball{
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, rgb(203, 75, 11) 60%, rgb(104, 117, 117) 100%);
+            transform-origin: 50% -100px;
+            border-radius: 50%;
+            box-shadow: 1px 5px 27px 3px #00008b38;
+        }
+        .ball::before {
+            content: "";
+            display: block;
+            position: absolute;
+            height: 100px;
+            width: 1px;
+            background-color: aqua;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Newton Cradle</h1>
+    </div>
+   
+    <div class="controls">
+        <div class="control-group">
+            <label for="speed">Mass of the sphere (kg):</label>
+            <input type="number" id="speed" value="1" min="0.1" step="0.1">
+        </div>
+        <div class="control-group">
+            <label for="angle">Speed of the sphere (m/s):</label>
+            <input type="number" id="angle" value="30" min="10" step="5">
+        </div>
+        <div class="control-group">
+            <label for="numBalls">Number of Balls:</label>
+            <input type="text" id="numBalls" value="5" min="3" max="10" width="80px">
+        </div>
+        <div class="control-group">
+            <label for="color">Ball Color (fun learning):</label>
+            <select id="color">
+                <option value="rgb(203, 75, 11)">Orange</option>
+                <option value="rgb(0, 128, 0)">Green</option>
+                <option value="rgb(0, 0, 255)">Blue</option>
+                <option value="rgb(255, 0, 0)">Red</option>
+            </select>
+        </div>
+        <button onclick="updateAnimation()">start</button> 
+    </div>
+    <div class="frame">
+        <div class="cradle">
+            
+        </div>
+    </div>
+    <script>
+        
+        function updateAnimation() {
+            const speed = parseFloat(document.getElementById('speed').value);
+            const angle = parseInt(document.getElementById('angle').value);
+            const numBalls = parseInt(document.getElementById('numBalls').value);
+            const color = document.getElementById('color').value;
+
+            const cradle = document.querySelector('.cradle');
+            const frame = document.querySelector('.frame');
+            cradle.innerHTML = '';
+
+            const ballSize = 40;
+            const cradleWidth = numBalls * ballSize;
+
+            frame.style.width = cradleWidth + '2px';
+            cradle.style.width = cradleWidth + '2px';
+
+            for (let i = 1; i <= numBalls; i++) {
+                const ball = document.createElement('div');
+                ball.className = `ball ball-${i}`;
+                ball.style.background = `radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, ${color} 60%, rgb(104, 117, 117) 100%)`;
+                cradle.appendChild(ball);
+            }
+
+            const styleSheet = document.styleSheets[0];
+            for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+                if (styleSheet.cssRules[i].name && styleSheet.cssRules[i].name.startsWith('ball-')) {
+                    styleSheet.deleteRule(i);
+                }
+            }
+
+       
+            styleSheet.insertRule(`
+                @keyframes ball-1 {
+                    0%, 50% {
+                        transform: rotate(0);
+                        background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, ${color} 60%, rgb(104, 117, 117) 100%);
+                    }
+                    100% {
+                        transform: rotate(${angle}deg);
+                        background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, #ffcc00 60%, rgb(104, 117, 117) 100%);
+                    }
+                }
+            `, styleSheet.cssRules.length);
+
+            styleSheet.insertRule(`
+                @keyframes ball-${numBalls} {
+                    0%, 50% {
+                        transform: rotate(0);
+                        background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, ${color} 60%, rgb(104, 117, 117) 100%);
+                    }
+                    100% {
+                        transform: rotate(-${angle}deg);
+                        background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, #ffcc00 60%, rgb(104, 117, 117) 100%);
+                    }
+                }
+            `, styleSheet.cssRules.length);
+
+            for (let i = 2; i < numBalls; i++) {
+                styleSheet.insertRule(`
+                    @keyframes ball-${i} {
+                        0%, 24%, 26%, 49%, 51%, 74%, 76%, 100% {
+                            background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, ${color} 60%, rgb(104, 117, 117) 100%);
+                        }
+                        25%, 75% {
+                            background: radial-gradient(circle at 65% 15%, white 1px, rgb(120, 131, 131) 3%, #ffcc00 60%, rgb(104, 117, 117) 100%);
+                        }
+                    }
+                `, styleSheet.cssRules.length);
+
+                const ball = cradle.querySelector(`.ball-${i}`);
+                ball.style.animation = `ball-${i} ${speed * 2}s ease-out infinite`;
+            }
+       
+            if (numBalls > 1) {
+                const ball1 = cradle.querySelector('.ball-1');
+                ball1.style.animation = `ball-1 ${speed}s ease-out infinite alternate`;
+
+                const ballLast = cradle.querySelector(`.ball-${numBalls}`);
+                ballLast.style.animation = `ball-${numBalls} ${speed}s ease-out ${speed}s infinite alternate`;
+            }
+        }
+        updateAnimation();
+    </script>
+</body>
+</html>

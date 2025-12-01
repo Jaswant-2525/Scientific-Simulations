@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Young's Double-Slit Experiment Simulation</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222;
+            flex-direction: column;
+        }
+        canvas{
+            border: 1px solid #444;
+            background-color: #000;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        #controls{ 
+            margin-top: 20px;
+            color: #fff;
+        }
+        #controls label{
+            margin: 0 10px;
+        }
+        #controls input{
+            margin: 0 10px;
+        }
+        .torch{
+            position: relative;
+            width: 20px;
+            height: 60px;
+            background-color: #fdd835;
+            box-shadow: 0 0 10px #fdd835;
+            margin-bottom: 10px;
+        }
+        .torch::before{
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 20px;
+            background-color: #fdd835;
+            box-shadow: 0 0 20px 10px #fdd835;
+            border-radius: 50%;
+        }
+        .slit{
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background-color: #000;
+        }
+        .slit::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 5px #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="torch" id="torch"></div>
+    <canvas id="doubleSlitCanvas" width="800" height="400"></canvas>
+    <div id="controls">
+        <label for="wavelength">Wavelength : </label>
+        <input type="range" id="wavelength" min="5" max="50" value="20">
+        <label for="slitDistance">Slit Distance : </label>
+        <input type="range" id="slitDistance" min="10" max="100" value="50">
+        <label for="screenDistance">Screen Distance : </label>
+        <input type="range" id="screenDistance" min="100" max="500" value="300">
+    </div>
+    <script>
+        const canvas = document.getElementById('doubleSlitCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const slitWidth = 5;    
+        let wavelength = document.getElementById('wavelength').value; 
+        let slitDistance = document.getElementById('slitDistance').value;
+        let screenDistance = document.getElementById('screenDistance').value;
+
+        document.getElementById('wavelength').addEventListener('input', function() {
+            wavelength = this.value;
+            drawSimulation();
+        });
+
+        document.getElementById('slitDistance').addEventListener('input', function() {
+            slitDistance = this.value;
+            drawSimulation();
+        });
+
+        document.getElementById('screenDistance').addEventListener('input', function() {
+            screenDistance = this.value;
+            drawSimulation();
+        });
+
+        function drawSimulation() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                
+            ctx.fillStyle = 'black';
+            ctx.fillRect(canvas.width / 2 - slitDistance / 2 - slitWidth / 2, 100, slitWidth, 20);
+            ctx.fillRect(canvas.width / 2 + slitDistance / 2 - slitWidth / 2, 100, slitWidth, 20);
+
+            
+            for (let i = -10; i <= 10; i++) {
+                drawLightRay(canvas.width / 2 - slitDistance / 2, 110, canvas.width / 2 + i * 10, 400);
+                drawLightRay(canvas.width / 2 + slitDistance / 2, 110, canvas.width / 2 + i * 10, 400);
+            }
+
+            
+            for (let x = 0; x < canvas.width; x++) {
+                let intensity = 0;
+
+                for (let slit = -1; slit <= 1; slit += 2) {
+                    const slitX = canvas.width / 2 + slit * slitDistance / 2;
+                    const pathDifference = Math.sqrt(Math.pow(x - slitX, 2) + Math.pow(screenDistance - 100, 2));
+                    intensity += Math.cos(2 * Math.PI * pathDifference / wavelength);
+                }
+
+                intensity = Math.pow(intensity, 2);
+                const brightness = Math.min(255, intensity * 50);
+
+                ctx.beginPath();
+                ctx.moveTo(x, 350);
+                ctx.lineTo(x, 400);
+                ctx.strokeStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
+                ctx.stroke();
+            }
+        }
+
+        function drawLightRay(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = 'rgba(255, 255, 0, 0.2)';
+            ctx.stroke();
+        }
+
+        drawSimulation();
+    </script>
+</body>
+</html>
+       
