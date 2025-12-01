@@ -9,10 +9,8 @@ This project blends clean front-end development with core physics concepts, allo
 Newton’s Cradle is a classic physics demonstration where a series of suspended spheres illustrate how momentum and energy are transferred through elastic collisions.
 
 In this project:
-
- // The cradle is rendered in the browser using **HTML** and **CSS**.
- // The motion and interactions between the balls are controlled using **JavaScript**.
- // Users can adjust key parameters such as:
+   The cradle is rendered in the browser using **HTML** and **CSS** and the motion and interactions between the balls are controlled using **JavaScript**.
+   Users can adjust key parameters such as:
       -> Number of pendulums (balls)
       -> Impact speed / initial displacement
 
