@@ -33,5 +33,7 @@ These controls allow users to explore how different configurations affect the be
 **Technologies Stack** 
 
   **HTML5** – Structure of the cradle and control panel.
+  
   **CSS3** – Styling and frame-by-frame animations of pendulum motion.
+  
   **JavaScript (Vanilla JS)** – Logic for user interaction and dynamic updates to the simulation parameters.
