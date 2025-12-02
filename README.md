@@ -4,7 +4,6 @@ An interactive, web-based simulation of **Newton’s Cradle** built using **HTML
 
 This project blends clean front-end development with core physics concepts, allowing users to experiment with different parameters and observe how they affect the motion of the cradle in real time.
 
----
 
 ## 🎯 Project Overview
 
@@ -19,8 +18,6 @@ In this project:
   - Impact speed / initial displacement
 
 These controls allow users to explore how different configurations affect the behavior of the system.
-
----
 
 ## ✨ Key Features
 
@@ -37,15 +34,12 @@ These controls allow users to explore how different configurations affect the be
   - Simple, intuitive layout to focus on the motion and physics.
   - Responsive design so the simulation works across different screen sizes.
 
----
-
 ## 🧠 Technologies Used
 
 - **HTML5** – Structure of the cradle and control panel.
 - **CSS3** – Styling and frame-by-frame animations of pendulum motion.
 - **JavaScript (Vanilla JS)** – Logic for user interaction and dynamic updates to the simulation parameters.
 
----
 
 ## 🚀 Getting Started
 
@@ -56,32 +50,15 @@ git clone https://github.com/your-username/newtons-cradle-simulation.git
 cd newtons-cradle-simulation
 
 🕹️ **Usage**
+1. Open index.html in your browser.
+2. Use the control panel (sliders / input fields / buttons) to:
+3. Set the number of balls in the cradle.
+4. Adjust the initial impact speed or initial displacement.
+5. Click Start / Play to run the simulation.
+6. Observe how the motion changes with different settings.
+7. Use Reset to return to the default configuration.
 
-Open index.html in your browser.
-
-Use the control panel (sliders / input fields / buttons) to:
-
-Set the number of balls in the cradle.
-
-Adjust the initial impact speed or initial displacement.
-
-Click Start / Play to run the simulation.
-
-Observe how the motion changes with different settings.
-
-Use Reset to return to the default configuration.
-
-📂 Project Structure
-.
-├── index.html        # Main HTML file
-├── css/
-│   └── styles.css    # Layout and animation styles
-├── js/
-│   └── main.js       # Simulation logic and user interactions
-└── assets/
-    └── (optional)    # Any images, icons, or additional resources
-
-🧪 Physics Concepts Demonstrated
+🧪** Physics Concepts Demonstrated**
 
 **Conservation of Momentum**
 When one ball strikes the others, momentum is transferred through the line of balls, causing the ball on the opposite end to swing out.
