@@ -49,6 +49,8 @@ bash
 git clone https://github.com/your-username/newtons-cradle-simulation.git
 cd newtons-cradle-simulation
 
+
+
 🕹️ **Usage**
 1. Open index.html in your browser.
 2. Use the control panel (sliders / input fields / buttons) to:
